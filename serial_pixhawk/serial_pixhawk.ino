@@ -1,3 +1,4 @@
+#include <mavlink.h>
 #include <SoftwareSerial.h>
 
 SoftwareSerial pixhawk(0, 1); // RX, TX
@@ -22,7 +23,14 @@ void loop() {
     uint8_t byte = pixhawk.read();
     if (mavlink_parse_char(chan, byte, &msg, &status))
     {
-    printf("Received message with ID %d, sequence: %d from component %d of system %d\n", msg.msgid, msg.seq, msg.compid, msg.sysid);
+    Serial.print("Received message with ID ");
+    Serial.print(msg.msgid);
+    Serial.print(" sequence: ");
+    Serial.print(msg.seq);
+    Serial.print(" from component ");
+    Serial.print(msg.compid);
+    Serial.print(" of system ");
+    Serial.println(msg.sysid);
     // ... DECODE THE MESSAGE PAYLOAD HERE ...
     }
   }
